@@ -1,48 +1,49 @@
-import 'package:flutter/foundation.dart';
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_app/drive/drivesList.dart';
+import 'package:flutter_app/ui/main_page.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_app/redux/app/app_state.dart';
+import 'package:flutter_app/redux/common_actions.dart';
+import 'package:flutter_app/redux/store.dart';
+import 'package:redux/redux.dart';
 
-void main() => runApp(MyApp());
+Future<Null> main() async {
+  // ignore: deprecated_member_use
+  MaterialPageRoute.debugEnableFadingRoutes = true;
 
-class MyApp extends StatelessWidget {
+  var store = await createStore();
+  runApp(CoPiApp(store));
+}
+
+class CoPiApp extends StatefulWidget {
+  CoPiApp(this.store);
+
+  final Store<AppState> store;
+
   @override
-  Widget build(BuildContext context) {
-    return new MaterialApp(
-      title: 'CoPi',
-      theme: new ThemeData(
-        primarySwatch: Colors.blue,
-        fontFamily: 'Merriweather',
-      ),
-      home: new MyHomePage(),
-    );
+  _CoPiAppState createState() => _CoPiAppState();
+}
+
+class _CoPiAppState extends State<CoPiApp> {
+  @override
+  void initState() {
+    super.initState();
+    widget.store.dispatch(InitAction());
   }
-}
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key}) : super(key: key);
-
-  @override
-  _MyHomePageState createState() => new _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text('CoPi'),
-      ),
-      body: futureDriveList(),
-      bottomNavigationBar: new BottomNavigationBar(items: [
-        new BottomNavigationBarItem(
-          icon: const Icon(Icons.queue),
-          title: new Text('Copy'),
+    return StoreProvider<AppState>(
+      store: widget.store,
+      child: MaterialApp(
+        title: 'CoPi',
+        theme: ThemeData(
+          primaryColor: const Color(0xFF1C306D),
+          accentColor: const Color(0xFFFFAD32),
         ),
-        new BottomNavigationBarItem(
-          icon: const Icon(Icons.sd_card),
-          title: new Text('Drives'),
-        )
-      ]),
+        home: const MainPage(),
+      ),
     );
   }
 }
