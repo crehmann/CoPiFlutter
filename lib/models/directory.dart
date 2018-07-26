@@ -3,6 +3,6 @@ import 'package:meta/meta.dart';
 
 @immutable
 class Directory extends DirectoryContent {
-  Directory(String name, int birthtime, int mtimeMs)
+  Directory({String name, int birthtime, int mtimeMs})
       : super(name, true, birthtime, mtimeMs);
 }

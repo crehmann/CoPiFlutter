@@ -1,6 +1,15 @@
 import 'package:flutter_app/models/directory_content.dart';
 import 'package:flutter_app/models/drive.dart';
 
+class RefreshDirectoryAction {
+  final Drive drive;
+  final String path;
+
+  String get fullPath => drive.device + ":" + path;
+
+  RefreshDirectoryAction.name(this.drive, this.path);
+}
+
 class RequestingDirectoryAction {
   final Drive drive;
   final String path;
@@ -14,7 +23,6 @@ class ErrorLoadingDirectoryAction {
   final String fullPath;
 
   ErrorLoadingDirectoryAction.name(this.fullPath);
-
 }
 
 class ReceivedDirectoryAction {
