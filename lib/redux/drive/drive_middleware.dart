@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_app/models/drive.dart';
 import 'package:flutter_app/networking/drive_api.dart';
+import 'package:flutter_app/redux/common_actions.dart';
 import 'package:flutter_app/redux/drive/drive_actions.dart';
 import 'package:redux/redux.dart';
 
@@ -12,7 +13,9 @@ class DriveMiddleware extends MiddlewareClass {
 
   @override
   void call(Store store, action, NextDispatcher next) async {
-    if (action is RefreshDrivesAction) {
+    next(action);
+
+    if (action is RefreshDrivesAction || action is InitAction) {
       next(RequestingDrivesAction());
 
       try {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/drive.dart';
 import 'package:flutter_app/ui/common/info_message_view.dart';
-import 'package:flutter_app/ui/directory/DirectoryPage.dart';
+import 'package:flutter_app/ui/directory/directory_page.dart';
 import 'package:flutter_app/utils/formatter.dart';
 import 'package:meta/meta.dart';
 
@@ -21,7 +21,7 @@ class DriveList extends StatelessWidget {
     Navigator.push<Null>(
       context,
       MaterialPageRoute(
-        builder: (_) => DirectoryPage(drive),
+        builder: (_) => DirectoryPage(drive, "/"),
       ),
     );
   }

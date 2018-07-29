@@ -2,7 +2,7 @@ import 'package:flutter_app/models/directory_content.dart';
 import 'package:meta/meta.dart';
 
 @immutable
-class Directory extends DirectoryContent {
-  Directory({String name, int birthtime, int mtimeMs})
+class Folder extends DirectoryContent {
+  Folder({String name, DateTime birthtime, DateTime mtimeMs})
       : super(name, true, birthtime, mtimeMs);
 }

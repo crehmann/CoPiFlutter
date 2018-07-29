@@ -5,6 +5,6 @@ import 'package:meta/meta.dart';
 class File extends DirectoryContent {
   final int size;
 
-  File({String name, this.size, int birthtime, int mtimeMs})
+  File({String name, this.size, DateTime birthtime, DateTime mtimeMs})
       : super(name, false, birthtime, mtimeMs);
 }

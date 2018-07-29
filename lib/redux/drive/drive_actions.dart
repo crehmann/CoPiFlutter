@@ -13,6 +13,6 @@ class ReceivedDrivesAction {
 
   @override
   String toString() {
-    return 'TodosLoadedAction{todos: $drives}';
+    return 'ReceivedDrivesAction{drives: $drives}';
   }
 }

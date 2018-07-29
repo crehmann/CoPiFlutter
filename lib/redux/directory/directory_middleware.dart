@@ -13,6 +13,7 @@ class DirectoryMiddleware extends MiddlewareClass {
 
   @override
   void call(Store store, action, NextDispatcher next) async {
+    next(action);
     if (action is RefreshDirectoryAction) {
       next(RequestingDirectoryAction.name(action.drive, action.path));
 

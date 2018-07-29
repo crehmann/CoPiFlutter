@@ -7,7 +7,7 @@ class RefreshDirectoryAction {
 
   String get fullPath => drive.device + ":" + path;
 
-  RefreshDirectoryAction.name(this.drive, this.path);
+  RefreshDirectoryAction({this.drive, this.path});
 }
 
 class RequestingDirectoryAction {

@@ -4,28 +4,17 @@ import 'package:flutter_app/redux/drive/drive_actions.dart';
 import 'package:flutter_app/ui/drives/drives_page.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
-class MainPage extends StatefulWidget {
+class MainPage extends StatelessWidget {
   const MainPage();
 
-  @override
-  _MainPageState createState() => _MainPageState();
-}
-
-class _MainPageState extends State<MainPage>
-    with SingleTickerProviderStateMixin {
-  static final GlobalKey<ScaffoldState> scaffoldKey =
-      GlobalKey<ScaffoldState>();
-
-  void _refreshDrives() {
-    var store = StoreProvider.of<AppState>(context);
-    store.dispatch(RefreshDrivesAction());
-  }
-
-  List<Widget> _buildActions() {
+  List<Widget> _buildActions(BuildContext context) {
     return <Widget>[
       IconButton(
         icon: const Icon(Icons.refresh),
-        onPressed: _refreshDrives,
+        onPressed: () {
+          var store = StoreProvider.of<AppState>(context);
+          store.dispatch(RefreshDrivesAction());
+        },
       ),
     ];
   }
@@ -33,10 +22,9 @@ class _MainPageState extends State<MainPage>
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      key: scaffoldKey,
       appBar: new AppBar(
         title: new Text('CoPi'),
-        actions: _buildActions(),
+        actions: _buildActions(context),
       ),
       body: DrivesPage(),
       bottomNavigationBar: new BottomNavigationBar(items: [

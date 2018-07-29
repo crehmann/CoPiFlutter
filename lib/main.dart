@@ -11,31 +11,20 @@ import 'package:redux/redux.dart';
 Future<Null> main() async {
   // ignore: deprecated_member_use
   MaterialPageRoute.debugEnableFadingRoutes = true;
-
-  var store = await createStore();
-  runApp(CoPiApp(store));
+  runApp(CoPiApp());
 }
 
-class CoPiApp extends StatefulWidget {
-  CoPiApp(this.store);
+class CoPiApp extends StatelessWidget {
+  final Store<AppState> store = createStore();
 
-  final Store<AppState> store;
-
-  @override
-  _CoPiAppState createState() => _CoPiAppState();
-}
-
-class _CoPiAppState extends State<CoPiApp> {
-  @override
-  void initState() {
-    super.initState();
-    widget.store.dispatch(InitAction());
+  CoPiApp() {
+    store.dispatch(InitAction());
   }
 
   @override
   Widget build(BuildContext context) {
     return StoreProvider<AppState>(
-      store: widget.store,
+      store: store,
       child: MaterialApp(
         title: 'CoPi',
         theme: ThemeData(
