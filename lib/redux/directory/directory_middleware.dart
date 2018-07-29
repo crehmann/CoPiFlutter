@@ -24,6 +24,14 @@ class DirectoryMiddleware extends MiddlewareClass {
         next(ErrorLoadingDirectoryAction.name(action.fullPath));
       }
     }
+
+    if (action is DownloadFileAction) {
+      try {
+        await api.downloadFile(action.drive, action.path);
+      } catch (e) {
+        //TODO: show toast!
+      }
+    }
   }
 
   Future<List<DirectoryContent>> _fetchDirectory(

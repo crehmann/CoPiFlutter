@@ -14,10 +14,12 @@ class DirectoryGrid extends StatelessWidget {
   DirectoryGrid({
     @required this.content,
     @required this.onReloadCallback,
+    @required this.downloadFileCallback,
   });
 
   final List<DirectoryContent> content;
   final VoidCallback onReloadCallback;
+  final Function(File) downloadFileCallback;
 
   // void _browseDirectory(BuildContext context, String directoryName) {
   //   Navigator.push<Null>(
@@ -47,7 +49,7 @@ class DirectoryGrid extends StatelessWidget {
             if (contentItem is File) {
               return DirectoryGridFileItem(
                 item: contentItem,
-                onTapped: () => {},
+                onTapped: () => downloadFileCallback(contentItem),
               );
             }
 

@@ -15,8 +15,12 @@ class DirectoryGridFileItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTextStyle(
-        style: style.textStyleNormal, child: _buildFileItem(context));
+    return Material(
+        color: Colors.transparent,
+        child: InkWell(
+            onTap: onTapped,
+            child: DefaultTextStyle(
+                style: style.textStyleNormal, child: _buildFileItem(context))));
   }
 
   Widget _buildFileItem(BuildContext context) {
@@ -50,13 +54,6 @@ class DirectoryGridFileItem extends StatelessWidget {
             ),
             Text(formatBytes(item.size, 2), style: TextStyle(fontSize: 14.0))
           ]),
-        ),
-        Material(
-          color: Colors.transparent,
-          child: InkWell(
-            onTap: onTapped,
-            child: Container(),
-          ),
         ),
       ],
     );

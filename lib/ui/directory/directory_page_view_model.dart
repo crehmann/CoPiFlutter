@@ -1,23 +1,27 @@
 import 'package:collection/collection.dart';
 import 'package:flutter_app/models/directory_content.dart';
 import 'package:flutter_app/models/drive.dart';
+import 'package:flutter_app/models/file.dart';
 import 'package:flutter_app/models/loading_status.dart';
 import 'package:flutter_app/redux/app/app_state.dart';
 import 'package:flutter_app/redux/directory/directory_actions.dart';
 import 'package:flutter_app/redux/directory/directory_state.dart';
 import 'package:meta/meta.dart';
 import 'package:redux/redux.dart';
+import 'package:path/path.dart' as Path;
 
 class DirectoryPageViewModel {
   DirectoryPageViewModel({
     @required this.status,
     @required this.content,
     @required this.refreshDirectory,
+    @required this.downloadFile,
   });
 
   final LoadingStatus status;
   final List<DirectoryContent> content;
   final Function refreshDirectory;
+  final Function(File) downloadFile;
 
   static DirectoryPageViewModel fromStore(
     Store<AppState> store,
@@ -31,11 +35,12 @@ class DirectoryPageViewModel {
       store.dispatch(RefreshDirectoryAction(drive: drive, path: path));
     }
     return DirectoryPageViewModel(
-      status: directoryState.loadingStatus,
-      content: directoryState.content,
-      refreshDirectory: () =>
-          store.dispatch(RefreshDirectoryAction(drive: drive, path: path)),
-    );
+        status: directoryState.loadingStatus,
+        content: directoryState.content,
+        refreshDirectory: () =>
+            store.dispatch(RefreshDirectoryAction(drive: drive, path: path)),
+        downloadFile: (file) => store.dispatch(DownloadFileAction(
+            drive: drive, path: Path.join(path, file.name))));
   }
 
   @override

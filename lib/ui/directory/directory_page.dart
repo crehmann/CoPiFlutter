@@ -43,6 +43,7 @@ class DirectoryPageContent extends StatelessWidget {
       successContent: DirectoryGrid(
         content: viewModel.content,
         onReloadCallback: viewModel.refreshDirectory,
+        downloadFileCallback: viewModel.downloadFile,
       ),
     );
   }

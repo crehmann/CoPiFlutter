@@ -31,3 +31,10 @@ class ReceivedDirectoryAction {
 
   ReceivedDirectoryAction(this.fullPath, this.content);
 }
+
+class DownloadFileAction {
+  final Drive drive;
+  final String path;
+
+  DownloadFileAction({this.drive, this.path});
+}
