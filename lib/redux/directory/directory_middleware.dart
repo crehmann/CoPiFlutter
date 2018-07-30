@@ -27,7 +27,7 @@ class DirectoryMiddleware extends MiddlewareClass {
 
     if (action is DownloadFileAction) {
       try {
-        await api.downloadFile(action.drive, action.path);
+        await api.downloadFile(action.file.downloadLink);
       } catch (e) {
         //TODO: show toast!
       }

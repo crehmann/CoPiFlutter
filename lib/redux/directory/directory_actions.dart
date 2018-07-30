@@ -1,5 +1,6 @@
 import 'package:flutter_app/models/directory_content.dart';
 import 'package:flutter_app/models/drive.dart';
+import 'package:flutter_app/models/file.dart';
 
 class RefreshDirectoryAction {
   final Drive drive;
@@ -33,8 +34,7 @@ class ReceivedDirectoryAction {
 }
 
 class DownloadFileAction {
-  final Drive drive;
-  final String path;
+  final File file;
 
-  DownloadFileAction({this.drive, this.path});
+  DownloadFileAction({this.file});
 }

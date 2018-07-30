@@ -10,15 +10,14 @@ import 'package:url_launcher/url_launcher.dart';
 class DirectoryApi {
   Future<List<DirectoryContent>> fetchDirectory(
       Drive drive, String path) async {
-    var directoryUri = new Uri.http(
-        globals.baseUrl, 'drives/' + drive.devicePath, {"path": path});
+    var directoryUri = globals.baseUri.replace(
+        path: 'drives/' + drive.devicePath, queryParameters: {"path": path});
     final response = await getRequest(directoryUri);
     return compute(DirectoryParser.parseJson, response);
   }
 
-  Future downloadFile(Drive drive, String path) async {
-    final downloadUri = new Uri.http(globals.baseUrl, 'download',
-        {"device": drive.devicePath, "path": path}).toString();
+  Future downloadFile(String path) async {
+    final downloadUri = globals.baseUri.toString() + path;
 
     if (await canLaunch(downloadUri)) {
       await launch(downloadUri);

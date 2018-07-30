@@ -6,10 +6,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_app/globals.dart' as globals;
 
 class DriveApi {
-  static final Uri driveBaseUri = new Uri.http(globals.baseUrl, 'drives');
 
   Future<List<Drive>> fetchDrives() async {
-    final response = await getRequest(driveBaseUri);
+    final response = await getRequest(globals.baseUri.replace(path: 'drives'));
     return compute(DriveParser.parseJson, response);
   }
 }

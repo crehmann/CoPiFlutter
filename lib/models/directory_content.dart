@@ -4,8 +4,8 @@ import 'package:meta/meta.dart';
 abstract class DirectoryContent {
   final String name;
   final bool isDirectory;
-  final DateTime birthtime;
-  final DateTime mtimeMs;
+  final DateTime creationTime;
+  final DateTime lastModified;
 
-  DirectoryContent(this.name, this.isDirectory, this.birthtime, this.mtimeMs);
+  DirectoryContent(this.name, this.isDirectory, this.creationTime, this.lastModified);
 }

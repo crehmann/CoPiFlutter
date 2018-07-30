@@ -41,6 +41,8 @@ class DirectoryPageContent extends StatelessWidget {
         onRetry: viewModel.refreshDirectory,
       ),
       successContent: DirectoryGrid(
+        drive: viewModel.drive,
+        path: viewModel.path,
         content: viewModel.content,
         onReloadCallback: viewModel.refreshDirectory,
         downloadFileCallback: viewModel.downloadFile,

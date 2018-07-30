@@ -8,17 +8,20 @@ import 'package:flutter_app/redux/directory/directory_actions.dart';
 import 'package:flutter_app/redux/directory/directory_state.dart';
 import 'package:meta/meta.dart';
 import 'package:redux/redux.dart';
-import 'package:path/path.dart' as Path;
 
 class DirectoryPageViewModel {
   DirectoryPageViewModel({
     @required this.status,
+    @required this.drive,
+    @required this.path,
     @required this.content,
     @required this.refreshDirectory,
     @required this.downloadFile,
   });
 
   final LoadingStatus status;
+  final Drive drive;
+  final String path;
   final List<DirectoryContent> content;
   final Function refreshDirectory;
   final Function(File) downloadFile;
@@ -36,11 +39,12 @@ class DirectoryPageViewModel {
     }
     return DirectoryPageViewModel(
         status: directoryState.loadingStatus,
+        drive: drive,
+        path: path,
         content: directoryState.content,
         refreshDirectory: () =>
             store.dispatch(RefreshDirectoryAction(drive: drive, path: path)),
-        downloadFile: (file) => store.dispatch(DownloadFileAction(
-            drive: drive, path: Path.join(path, file.name))));
+        downloadFile: (file) => store.dispatch(DownloadFileAction(file: file)));
   }
 
   @override

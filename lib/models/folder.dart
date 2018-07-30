@@ -3,6 +3,6 @@ import 'package:meta/meta.dart';
 
 @immutable
 class Folder extends DirectoryContent {
-  Folder({String name, DateTime birthtime, DateTime mtimeMs})
-      : super(name, true, birthtime, mtimeMs);
+  Folder({String name, DateTime creationTime, DateTime lastModified})
+      : super(name, true, creationTime, lastModified);
 }
