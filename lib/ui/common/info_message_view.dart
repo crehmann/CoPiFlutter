@@ -10,7 +10,7 @@ class ErrorView extends InfoMessageView {
   const ErrorView({
     String title,
     String description,
-    @required VoidCallback onRetry,
+    VoidCallback onRetry,
   }) : super(
           actionButtonKey: tryAgainButtonKey,
           title: title ?? 'Oops!',

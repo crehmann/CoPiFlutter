@@ -1,6 +1,8 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/redux/drive/drive_actions.dart';
 import 'package:flutter_app/ui/main_page.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_app/redux/app/app_state.dart';
@@ -18,19 +20,16 @@ class CoPiApp extends StatelessWidget {
   final Store<AppState> store = createStore();
 
   CoPiApp() {
-    store.dispatch(InitAction());
+    store.dispatch(RefreshDrivesAction());
   }
 
   @override
   Widget build(BuildContext context) {
     return StoreProvider<AppState>(
       store: store,
-      child: MaterialApp(
+      child: CupertinoApp(
         title: 'CoPi',
-        theme: ThemeData(
-          primaryColor: const Color(0xFF1C306D),
-          accentColor: const Color(0xFFFFAD32),
-        ),
+        debugShowCheckedModeBanner: false,
         home: const MainPage(),
       ),
     );

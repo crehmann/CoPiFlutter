@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/file.dart';
 import 'package:flutter_app/utils/formatter.dart';
@@ -58,7 +59,7 @@ class DirectoryGridFileItem extends StatelessWidget {
               decoration: new ShapeDecoration(
                   shape: new RoundedRectangleBorder(
                       borderRadius: borderRadius,
-                      side: new BorderSide(color: Colors.white, width: 1.0)
+                      side: new BorderSide(color: Colors.grey, width: 1.0)
                       //side: new BorderSide(...)
                       )),
               child: ClipRRect(
@@ -71,7 +72,7 @@ class DirectoryGridFileItem extends StatelessWidget {
           )
         : Icon(
             Icons.insert_drive_file,
-            color: Colors.white,
+            color: CupertinoColors.activeBlue,
             size: 60.0,
           );
   }

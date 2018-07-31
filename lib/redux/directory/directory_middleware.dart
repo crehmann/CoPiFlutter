@@ -20,8 +20,10 @@ class DirectoryMiddleware extends MiddlewareClass {
       try {
         var content = await _fetchDirectory(action.drive, action.path);
         next(ReceivedDirectoryAction(action.fullPath, content));
+        action.completer.complete();
       } catch (e) {
         next(ErrorLoadingDirectoryAction.name(action.fullPath));
+        action.completer.completeError(e);
       }
     }
 

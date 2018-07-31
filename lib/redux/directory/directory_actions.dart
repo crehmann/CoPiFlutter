@@ -1,14 +1,18 @@
+import 'dart:async';
+
 import 'package:flutter_app/models/directory_content.dart';
 import 'package:flutter_app/models/drive.dart';
 import 'package:flutter_app/models/file.dart';
+import 'package:meta/meta.dart';
 
 class RefreshDirectoryAction {
+  final Completer completer = new Completer();
   final Drive drive;
   final String path;
 
   String get fullPath => drive.device + ":" + path;
 
-  RefreshDirectoryAction({this.drive, this.path});
+  RefreshDirectoryAction({@required this.drive, @required this.path});
 }
 
 class RequestingDirectoryAction {

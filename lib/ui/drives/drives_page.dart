@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/models/loading_status.dart';
 import 'package:flutter_app/redux/app/app_state.dart';
+import 'package:flutter_app/redux/drive/drive_actions.dart';
 import 'package:flutter_app/ui/common/info_message_view.dart';
-import 'package:flutter_app/ui/common/loading_view.dart';
-import 'package:flutter_app/ui/common/platform_adaptive_progress_indicator.dart';
 import 'package:flutter_app/ui/drives/drive_list.dart';
 import 'package:flutter_app/ui/drives/drives_page_view_model.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -14,31 +14,53 @@ class DrivesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, DrivesPageViewModel>(
-      distinct: true,
-      converter: (store) => DrivesPageViewModel.fromStore(store),
-      builder: (_, viewModel) => DrivesPageContent(viewModel),
-    );
+        distinct: true,
+        converter: (store) => DrivesPageViewModel.fromStore(store),
+        builder: (_, viewModel) => new CupertinoPageScaffold(
+              child: new CustomScrollView(
+                slivers: <Widget>[
+                  const CupertinoSliverNavigationBar(
+                    largeTitle: Text("Drives"),
+                  ),
+                  CupertinoRefreshControl(onRefresh: () {
+                    var store = StoreProvider.of<AppState>(context);
+                    final action = RefreshDrivesAction();
+                    store.dispatch(action);
+                    return action.completer.future;
+                  }),
+                  new SliverSafeArea(
+                      top: false,
+                      // Top safe area is consumed by the navigation bar.
+                      sliver: DrivesPageSliver(viewModel)),
+                ],
+              ),
+            ));
   }
 }
 
-class DrivesPageContent extends StatelessWidget {
-  DrivesPageContent(this.viewModel);
+class DrivesPageSliver extends StatelessWidget {
+  DrivesPageSliver(this.viewModel);
 
   final DrivesPageViewModel viewModel;
 
   @override
   Widget build(BuildContext context) {
-    return LoadingView(
-      status: viewModel.status,
-      loadingContent: const PlatformAdaptiveProgressIndicator(),
-      errorContent: ErrorView(
-        description: 'Error loading drives.',
-        onRetry: viewModel.refreshDrives,
-      ),
-      successContent: DriveList(
+    if (viewModel.status == LoadingStatus.success) {
+      return DriveList(
         drives: viewModel.drives,
         onReloadCallback: viewModel.refreshDrives,
-      ),
+      );
+    }
+    if (viewModel.status == LoadingStatus.error) {
+      return SliverFillRemaining(
+          child: ErrorView(
+        description: 'Error loading drives.',
+        onRetry: null,
+      ));
+    }
+
+    return SliverFillRemaining(
+      child: Center(child: Text("Loading...")),
     );
   }
 }

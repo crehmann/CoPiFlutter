@@ -15,14 +15,16 @@ class DriveMiddleware extends MiddlewareClass {
   void call(Store store, action, NextDispatcher next) async {
     next(action);
 
-    if (action is RefreshDrivesAction || action is InitAction) {
+    if (action is RefreshDrivesAction) {
       next(RequestingDrivesAction());
 
       try {
         var drives = await _fetchDrives(next);
         next(ReceivedDrivesAction(drives));
+        action.completer.complete();
       } catch (e) {
         next(ErrorLoadingDrivesAction());
+        action.completer.completeError(e);
       }
     }
   }

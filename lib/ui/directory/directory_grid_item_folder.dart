@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/folder.dart';
 import 'package:meta/meta.dart';
@@ -33,7 +34,7 @@ class DirectoryGridFolderItem extends StatelessWidget {
             height: 80.0,
             child: Icon(
               Icons.folder,
-              color: Colors.white,
+              color: CupertinoColors.activeBlue,
               size: 80.0,
             )),
         Container(
