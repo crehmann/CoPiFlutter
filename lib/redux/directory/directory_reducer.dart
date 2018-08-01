@@ -33,6 +33,6 @@ BuiltMap<String, DirectoryState> _errorLoadingDirectory(
     ErrorLoadingDirectoryAction action) {
   var builder = state.toBuilder();
   builder[action.fullPath] =
-      state[action.fullPath].copyWith(loadingStatus: LoadingStatus.success);
+      state[action.fullPath].copyWith(loadingStatus: LoadingStatus.error);
   return builder.build();
 }

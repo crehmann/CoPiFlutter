@@ -76,7 +76,13 @@ class DirectoryPageSliver extends StatelessWidget {
     }
 
     return SliverFillRemaining(
-      child: Center(child: Text("Loading...")),
+      child: Padding(
+        child: Text(
+          "Loading...",
+          textAlign: TextAlign.center,
+        ),
+        padding: EdgeInsets.all(16.0),
+      ),
     );
   }
 }

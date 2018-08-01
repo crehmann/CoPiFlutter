@@ -30,13 +30,12 @@ class DriveList extends StatelessWidget {
   Widget build(BuildContext context) {
     if (drives.isEmpty) {
       return SliverFillRemaining(
-          child: Center(
-              child: InfoMessageView(
+          child: InfoMessageView(
         key: emptyViewKey,
         title: 'All empty!',
         description: 'Didn\'t find any drives at\nall.',
         onActionButtonTapped: null,
-      )));
+      ));
     }
 
     return _buildContent(context);

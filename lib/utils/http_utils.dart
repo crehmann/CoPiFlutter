@@ -5,8 +5,19 @@ import 'dart:io';
 final _httpClient = HttpClient();
 
 Future<String> getRequest(Uri uri) async {
+
   var request = await _httpClient.getUrl(uri);
   var response = await request.close();
 
+  ensureSuccessStatusCode(response.statusCode);
   return response.transform(utf8.decoder).join();
+}
+
+void ensureSuccessStatusCode(int statusCode) {
+  if (isSuccessStatusCode(statusCode)) return;
+  throw new HttpException("Request failed ($statusCode)");
+}
+
+bool isSuccessStatusCode(int statusCode) {
+  return statusCode >= 200 && statusCode <= 299;
 }

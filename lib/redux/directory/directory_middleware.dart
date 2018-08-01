@@ -23,7 +23,7 @@ class DirectoryMiddleware extends MiddlewareClass {
         action.completer.complete();
       } catch (e) {
         next(ErrorLoadingDirectoryAction.name(action.fullPath));
-        action.completer.completeError(e);
+        action.completer.complete();
       }
     }
 
