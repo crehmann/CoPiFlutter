@@ -1,3 +1,4 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter_app/models/directory_content.dart';
 import 'package:flutter_app/models/drive.dart';
@@ -22,7 +23,7 @@ class DirectoryPageViewModel {
   final LoadingStatus status;
   final Drive drive;
   final String path;
-  final List<DirectoryContent> content;
+  final BuiltList<DirectoryContent> content;
   final Function refreshDirectory;
   final Function(File) downloadFile;
 

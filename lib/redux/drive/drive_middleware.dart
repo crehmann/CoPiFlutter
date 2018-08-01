@@ -24,7 +24,7 @@ class DriveMiddleware extends MiddlewareClass {
         action.completer.complete();
       } catch (e) {
         next(ErrorLoadingDrivesAction());
-        action.completer.completeError(e);
+        action.completer.complete();
       }
     }
   }

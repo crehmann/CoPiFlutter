@@ -27,11 +27,10 @@ class CoPiApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return StoreProvider<AppState>(
       store: store,
-      child: CupertinoApp(
-        title: 'CoPi',
-        debugShowCheckedModeBanner: false,
-        home: const MainPage(),
-      ),
+      child: MaterialApp(
+          title: 'CoPi',
+          debugShowCheckedModeBanner: false,
+          home: const MainPage()),
     );
   }
 }

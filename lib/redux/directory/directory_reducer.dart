@@ -11,6 +11,8 @@ final directoryReducer = combineReducers<BuiltMap<String, DirectoryState>>([
       _receivedDirectory),
   TypedReducer<BuiltMap<String, DirectoryState>, ErrorLoadingDirectoryAction>(
       _errorLoadingDirectory),
+  TypedReducer<BuiltMap<String, DirectoryState>, SortDirectoryAction>(
+      _sortDirectory)
 ]);
 
 BuiltMap<String, DirectoryState> _requestingDirectory(
@@ -23,8 +25,8 @@ BuiltMap<String, DirectoryState> _requestingDirectory(
 BuiltMap<String, DirectoryState> _receivedDirectory(
     BuiltMap<String, DirectoryState> state, ReceivedDirectoryAction action) {
   var builder = state.toBuilder();
-  builder[action.fullPath] = state[action.fullPath]
-      .copyWith(loadingStatus: LoadingStatus.success, content: action.content);
+  builder[action.fullPath] = state[action.fullPath].copyWith(
+      loadingStatus: LoadingStatus.success, content: BuiltList(action.content));
   return builder.build();
 }
 
@@ -34,5 +36,14 @@ BuiltMap<String, DirectoryState> _errorLoadingDirectory(
   var builder = state.toBuilder();
   builder[action.fullPath] =
       state[action.fullPath].copyWith(loadingStatus: LoadingStatus.error);
+  return builder.build();
+}
+
+BuiltMap<String, DirectoryState> _sortDirectory(
+    BuiltMap<String, DirectoryState> state, SortDirectoryAction action) {
+  if (!state.containsKey(action.fullPath)) return state;
+  var builder = state.toBuilder();
+  builder[action.fullPath] = state[action.fullPath]
+      .sortBy(sorting: action.sorting);
   return builder.build();
 }

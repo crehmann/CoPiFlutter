@@ -16,25 +16,27 @@ class DrivesPage extends StatelessWidget {
     return StoreConnector<AppState, DrivesPageViewModel>(
         distinct: true,
         converter: (store) => DrivesPageViewModel.fromStore(store),
-        builder: (_, viewModel) => new CupertinoPageScaffold(
+        builder: (_, viewModel) =>
+        new Scaffold(
+            body: RefreshIndicator(
+              onRefresh: () {
+                var store = StoreProvider.of<AppState>(context);
+                final action = RefreshDrivesAction();
+                store.dispatch(action);
+                return action.completer.future;
+              },
               child: new CustomScrollView(
                 slivers: <Widget>[
                   const CupertinoSliverNavigationBar(
                     largeTitle: Text("Drives"),
                   ),
-                  CupertinoRefreshControl(onRefresh: () {
-                    var store = StoreProvider.of<AppState>(context);
-                    final action = RefreshDrivesAction();
-                    store.dispatch(action);
-                    return action.completer.future;
-                  }),
                   new SliverSafeArea(
                       top: false,
                       // Top safe area is consumed by the navigation bar.
                       sliver: DrivesPageSliver(viewModel)),
                 ],
               ),
-            ));
+            )));
   }
 }
 

@@ -3,10 +3,11 @@ import 'dart:async';
 import 'package:flutter_app/models/directory_content.dart';
 import 'package:flutter_app/models/drive.dart';
 import 'package:flutter_app/models/file.dart';
+import 'package:flutter_app/redux/directory/directory_sorting.dart';
 import 'package:meta/meta.dart';
 
 class RefreshDirectoryAction {
-  final Completer completer = new Completer();
+  final Completer<Null> completer = new Completer();
   final Drive drive;
   final String path;
 
@@ -28,6 +29,16 @@ class ErrorLoadingDirectoryAction {
   final String fullPath;
 
   ErrorLoadingDirectoryAction.name(this.fullPath);
+}
+
+class SortDirectoryAction {
+  final Drive drive;
+  final String path;
+  final DirectorySorting sorting;
+
+  SortDirectoryAction({this.drive, this.path, this.sorting});
+
+  String get fullPath => drive.device + ":" + path;
 }
 
 class ReceivedDirectoryAction {
