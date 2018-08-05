@@ -1,42 +1,55 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/ui/drives/drives_page.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_app/ui/copyjob/copy_job_list_page.dart';
+import 'package:flutter_app/ui/drives/drives_page.dart';
 
-class MainPage extends StatelessWidget {
+class MainPage extends StatefulWidget {
   const MainPage();
 
-  Widget _buildCopyPage() {
-    return CupertinoTabView(builder: (BuildContext context) {
-      return CupertinoPageScaffold(
-        child: CustomScrollView(
-          slivers: <Widget>[
-            CupertinoSliverNavigationBar(
-              largeTitle: Text("Copy Jobs"),
-            ),
-            SliverFillRemaining()
-          ],
-        ),
-      );
-    });
+  @override
+  _MainPageState createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage>
+    with SingleTickerProviderStateMixin {
+  static final GlobalKey<ScaffoldState> scaffoldKey =
+      GlobalKey<ScaffoldState>();
+
+  TabController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TabController(length: 2, vsync: this);
   }
 
   @override
   Widget build(BuildContext context) {
-    return new CupertinoTabScaffold(
-      tabBar: new CupertinoTabBar(
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(title: Text("Copy"), icon: Icon(Icons.queue)),
-          BottomNavigationBarItem(
-              title: Text("Drives"), icon: Icon(Icons.sd_card))
+    return Scaffold(
+      key: scaffoldKey,
+      appBar: AppBar(
+        title: Text("CoPi"),
+        bottom: TabBar(
+          controller: _controller,
+          tabs: const <Tab>[
+            const Tab(
+              text: 'Copy Jobs',
+              icon: Icon(Icons.queue),
+            ),
+            const Tab(
+              text: 'Drives',
+              icon: Icon(Icons.sd_card),
+            ),
+          ],
+        ),
+      ),
+      body: TabBarView(
+        controller: _controller,
+        children: <Widget>[
+          CopyJobListPage(),
+          DrivesPage(),
         ],
       ),
-      tabBuilder: (BuildContext context, int index) {
-        return index == 0
-            ? _buildCopyPage()
-            : CupertinoTabView(builder: (BuildContext context) {
-                return DrivesPage();
-              });
-      },
     );
   }
 }

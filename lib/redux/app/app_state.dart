@@ -1,6 +1,5 @@
 import 'dart:collection';
 
-import 'package:flutter_app/models/copy_job_state.dart';
 import 'package:flutter_app/models/directory_content.dart';
 import 'package:flutter_app/redux/copyjob/copy_job_list_state.dart';
 import 'package:flutter_app/redux/directory/directory_state.dart';

@@ -36,7 +36,8 @@ CopyJobListState _receivedCopyJobList(
     CopyJobListState state, ReceivedCopyJobListAction action) {
   return state.copyWith(
       copyJobsLoadingStatus: LoadingStatus.success,
-      copyJobStates: BuiltList(action.copyJobs));
+      copyJobStates: BuiltList(action.copyJobs.map<CopyJobState>((c) =>
+          CopyJobState(copyJob: c, loadingStatus: LoadingStatus.success))));
 }
 
 CopyJobListState _requestingCopyJob(

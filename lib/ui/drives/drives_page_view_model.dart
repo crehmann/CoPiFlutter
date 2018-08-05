@@ -16,16 +16,19 @@ class DrivesPageViewModel {
 
   final LoadingStatus status;
   final List<Drive> drives;
-  final Function refreshDrives;
+  final RefreshCallback refreshDrives;
 
   static DrivesPageViewModel fromStore(
     Store<AppState> store,
   ) {
     return DrivesPageViewModel(
-      status: store.state.driveState.loadingStatus,
-      drives: store.state.driveState.drives,
-      refreshDrives: () => store.dispatch(RefreshDrivesAction()),
-    );
+        status: store.state.driveState.loadingStatus,
+        drives: store.state.driveState.drives,
+        refreshDrives: () {
+          var action = RefreshDrivesAction();
+          store.dispatch(action);
+          return action.completer.future;
+        });
   }
 
   @override

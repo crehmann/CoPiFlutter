@@ -51,7 +51,6 @@ class DirectoryPage extends StatelessWidget {
       isDestructiveAction: false,
       onPressed: () {
         Navigator.pop(context, sorting);
-        ;
       },
     );
   }

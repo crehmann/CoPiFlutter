@@ -15,12 +15,15 @@ class CopyJobParser {
         id: json['id'] as String,
         source: json['source'] as String,
         destination: json['destination'] as String,
-        flags: BuiltList(json['flags'] as List<String>),
-        options: BuiltList(json['options'] as List<String>),
+        flags: BuiltList(
+            (json['flags'] as List).map<String>((d) => d as String)),
+        options: BuiltList(
+            (json['options'] as List).map<String>((d) => d as String)),
         command: json['command'] as String,
         progress: json['progress'] as int,
         status: _parseCopyJobState(json['state'] as String),
-        output: BuiltList(json['output'] as List<String>),
+        output: BuiltList(
+            (json['output'] as List).map<String>((d) => d as String)),
         error: json['error'] as String);
   }
 
