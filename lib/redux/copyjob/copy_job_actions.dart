@@ -3,9 +3,23 @@ import 'dart:async';
 import 'package:flutter_app/models/copy_job.dart';
 import 'package:meta/meta.dart';
 
-class RefreshCopyJobsAction {
+// -- CopyJob List -- //
+
+class RefreshCopyJobListAction {
   final Completer<Null> completer = new Completer();
 }
+
+class RequestingCopyJobListAction {}
+
+class ErrorLoadingCopyJobListAction {}
+
+class ReceivedCopyJobListAction {
+  final List<CopyJob> copyJobs;
+
+  ReceivedCopyJobListAction({@required this.copyJobs});
+}
+
+// -- Single CopyJob -- //
 
 class RefreshCopyJobAction {
   final Completer<Null> completer = new Completer();
@@ -14,14 +28,16 @@ class RefreshCopyJobAction {
   RefreshCopyJobAction({@required this.id});
 }
 
-class RequestingCopyJobsAction {}
+class RequestingCopyJobAction {
+  final String id;
 
-class ErrorLoadingCopyJobsAction {}
+  RequestingCopyJobAction({@required this.id});
+}
 
-class ReceivedCopyJobsAction {
-  final List<CopyJob> copyJobs;
+class ErrorLoadingCopyJobAction {
+  final String id;
 
-  ReceivedCopyJobsAction({@required this.copyJobs});
+  ErrorLoadingCopyJobAction({@required this.id});
 }
 
 class ReceivedCopyJobAction {
@@ -30,7 +46,7 @@ class ReceivedCopyJobAction {
   ReceivedCopyJobAction({@required this.copyJob});
 }
 
-class ErrorLoadingCopyJobAction {}
+// -- Create CopyJob -- //
 
 class CreateCopyJobAction {
   final String sourceDevicePath;
@@ -45,12 +61,12 @@ class CreateCopyJobAction {
       @required this.options});
 }
 
-class CopyJobCreatingAction {}
+class CreatingCopyJobAction {}
 
-class CopyJobCreatedAction {
+class CreatedCopyJobAction {
   final CopyJob copyJob;
 
-  CopyJobCreatedAction({@required this.copyJob});
+  CreatedCopyJobAction({@required this.copyJob});
 }
 
 class ErrorCreatingCopyJobAction {}

@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_app/networking/copy_job_api.dart';
-import 'package:flutter_app/redux/copyjob/copyjob_actions.dart';
+import 'package:flutter_app/redux/copyjob/copy_job_actions.dart';
 import 'package:redux/redux.dart';
 
 class CopyJobMiddleware extends MiddlewareClass {
@@ -18,15 +18,15 @@ class CopyJobMiddleware extends MiddlewareClass {
   }
 
   Future _handleRefreshCopyJobsAction(action, NextDispatcher next) async {
-    if (action is RefreshCopyJobsAction) {
-      next(RequestingCopyJobsAction());
+    if (action is RefreshCopyJobListAction) {
+      next(RequestingCopyJobListAction());
 
       try {
         var copyJobs = await api.fetchCopyJobs();
-        next(ReceivedCopyJobsAction(copyJobs: copyJobs));
+        next(ReceivedCopyJobListAction(copyJobs: copyJobs));
         action.completer.complete();
       } catch (e) {
-        next(ErrorLoadingCopyJobsAction());
+        next(ErrorLoadingCopyJobListAction());
         action.completer.complete();
       }
     }
@@ -39,7 +39,7 @@ class CopyJobMiddleware extends MiddlewareClass {
         next(ReceivedCopyJobAction(copyJob: copyJob));
         action.completer.complete();
       } catch (e) {
-        next(ErrorLoadingCopyJobAction());
+        next(ErrorLoadingCopyJobAction(id: action.id));
         action.completer.complete();
       }
     }
@@ -48,9 +48,10 @@ class CopyJobMiddleware extends MiddlewareClass {
   Future _handleCreateCopyJobAction(action, NextDispatcher next) async {
     if (action is CreateCopyJobAction) {
       try {
+        next(CreatingCopyJobAction());
         var copyJob = await api.createCopyJob(action.sourceDevicePath,
             action.destinationDevicePath, action.flags, action.options);
-        next(CopyJobCreatedAction(copyJob: copyJob));
+        next(CreatedCopyJobAction(copyJob: copyJob));
       } catch (e) {
         next(ErrorCreatingCopyJobAction());
       }

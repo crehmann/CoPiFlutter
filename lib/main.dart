@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/redux/copyjob/copyjob_actions.dart';
+import 'package:flutter_app/redux/copyjob/copy_job_actions.dart';
 import 'package:flutter_app/redux/drive/drive_actions.dart';
 import 'package:flutter_app/ui/main_page.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -21,7 +21,7 @@ class CoPiApp extends StatelessWidget {
   final Store<AppState> store = createStore();
 
   CoPiApp() {
-    store.dispatch(RefreshCopyJobsAction());
+    store.dispatch(RefreshCopyJobListAction());
     store.dispatch(RefreshDrivesAction());
   }
 
