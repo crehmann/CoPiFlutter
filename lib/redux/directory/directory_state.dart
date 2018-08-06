@@ -12,11 +12,11 @@ class DirectoryState {
   DirectoryState._internal(
       {@required this.loadingStatus,
       @required this.content,
-      this.soring = defaultSorting});
+      this.sorting = defaultSorting});
 
   final LoadingStatus loadingStatus;
   final BuiltList<DirectoryContent> content;
-  final DirectorySorting soring;
+  final DirectorySorting sorting;
 
   factory DirectoryState.initial() {
     return DirectoryState._internal(
@@ -31,7 +31,7 @@ class DirectoryState {
   }) {
     return DirectoryState._internal(
       loadingStatus: loadingStatus ?? this.loadingStatus,
-      content: content == null ? this.content : _sort(content, this.soring),
+      content: content == null ? this.content : _sort(content, this.sorting),
     );
   }
 
@@ -41,7 +41,7 @@ class DirectoryState {
     return DirectoryState._internal(
         loadingStatus: this.loadingStatus,
         content: _sort(this.content, sorting),
-        soring: sorting);
+        sorting: sorting);
   }
 
   static BuiltList<DirectoryContent> _sort(

@@ -72,7 +72,6 @@ class DirectoryGridFileItem extends StatelessWidget {
           )
         : Icon(
             Icons.insert_drive_file,
-            color: CupertinoColors.activeBlue,
             size: 60.0,
           );
   }

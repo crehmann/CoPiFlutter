@@ -40,6 +40,8 @@ class _CoPiAppState extends State<CoPiApp> {
         theme: ThemeData(
           primaryColor: const Color(0xFF1C306D),
           accentColor: const Color(0xFFFFAD32),
+          primaryIconTheme: IconThemeData(color: Colors.white),
+          iconTheme: IconThemeData(color: const Color(0xFF1C306D)),
         ),
         home: const MainPage(),
       ),

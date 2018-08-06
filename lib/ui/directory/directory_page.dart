@@ -1,11 +1,11 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/drive.dart';
-import 'package:flutter_app/models/loading_status.dart';
 import 'package:flutter_app/redux/app/app_state.dart';
 import 'package:flutter_app/redux/directory/directory_actions.dart';
 import 'package:flutter_app/redux/directory/directory_sorting.dart';
 import 'package:flutter_app/ui/common/info_message_view.dart';
+import 'package:flutter_app/ui/common/loading_view.dart';
 import 'package:flutter_app/ui/directory/directory_grid.dart';
 import 'package:flutter_app/ui/directory/directory_page_view_model.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -17,11 +17,13 @@ class DirectoryPage extends StatelessWidget {
   final Drive drive;
   final String path;
 
-  void _showDirectorySortingDialog({BuildContext context}) {
+  void _showDirectorySortingDialog(
+      {@required BuildContext context,
+      @required DirectorySorting currentSorting}) {
     showDialog<DirectorySorting>(
       context: context,
-      barrierDismissible: false,
-      builder: _buildSortDialogWidget,
+      barrierDismissible: true,
+      builder: (context) => _buildSortDialogWidget(context, currentSorting),
     ).then<void>((DirectorySorting value) {
       if (value != null) {
         StoreProvider.of<AppState>(context).dispatch(
@@ -30,25 +32,34 @@ class DirectoryPage extends StatelessWidget {
     });
   }
 
-  Widget _buildSortDialogWidget(BuildContext context) {
-    return new CupertinoAlertDialog(
+  Widget _buildSortDialogWidget(
+      BuildContext context, DirectorySorting currentSorting) {
+    return new SimpleDialog(
       title: const Text('Sort order'),
-      actions: <Widget>[
-        _buildCupertinoDialogSortingAction(
-            context, DirectorySorting.byCreationTimeAsc),
-        _buildCupertinoDialogSortingAction(
-            context, DirectorySorting.byCreationTimeDesc),
-        _buildCupertinoDialogSortingAction(context, DirectorySorting.byNameAsc),
-        _buildCupertinoDialogSortingAction(context, DirectorySorting.byNameDesc)
+      children: <Widget>[
+        _buildSimpleDialogOption(
+            context, DirectorySorting.byCreationTimeAsc, currentSorting),
+        _buildSimpleDialogOption(
+            context, DirectorySorting.byCreationTimeDesc, currentSorting),
+        _buildSimpleDialogOption(
+            context, DirectorySorting.byNameAsc, currentSorting),
+        _buildSimpleDialogOption(
+            context, DirectorySorting.byNameDesc, currentSorting)
       ],
     );
   }
 
-  Widget _buildCupertinoDialogSortingAction(
-      BuildContext context, DirectorySorting sorting) {
-    return new CupertinoDialogAction(
-      child: Text(sorting.toString()),
-      isDestructiveAction: false,
+  Widget _buildSimpleDialogOption(BuildContext context,
+      DirectorySorting sorting, DirectorySorting selectedSorting) {
+    return new SimpleDialogOption(
+      child: RadioListTile(
+        value: sorting,
+        groupValue: selectedSorting,
+        title: Text(sorting.toString()),
+        isThreeLine: false,
+        selected: true,
+        onChanged: null,
+      ),
       onPressed: () {
         Navigator.pop(context, sorting);
       },
@@ -62,63 +73,43 @@ class DirectoryPage extends StatelessWidget {
         converter: (store) =>
             DirectoryPageViewModel.fromStore(store, drive, path),
         builder: (_, viewModel) => new Scaffold(
-            appBar: CupertinoNavigationBar(
-              middle: Text(basename(path)),
-              trailing: Material(
-                  child: IconButton(
-                      icon: Icon(
-                        Icons.sort,
-                        color: CupertinoColors.activeBlue,
-                      ),
-                      onPressed: () =>
-                          _showDirectorySortingDialog(context: context))),
+            appBar: AppBar(
+              title: Text(basename(path)),
+              centerTitle: Platform.isIOS,
+              actions: <Widget>[
+                IconButton(
+                    icon: Icon(
+                      Icons.sort,
+                      color: Colors.white,
+                    ),
+                    onPressed: () => _showDirectorySortingDialog(
+                        context: context, currentSorting: viewModel.sorting))
+              ],
             ),
-            body: RefreshIndicator(
-                onRefresh: () {
-                  var store = StoreProvider.of<AppState>(context);
-                  final action =
-                      RefreshDirectoryAction(drive: drive, path: path);
-                  store.dispatch(action);
-                  return action.completer.future;
-                },
-                child: new CupertinoPageScaffold(
-                  child: new CustomScrollView(
-                    slivers: <Widget>[DirectoryPageSliver(viewModel)],
-                  ),
-                ))));
+            body: DirectoryPageContent(viewModel)));
   }
 }
 
-class DirectoryPageSliver extends StatelessWidget {
-  DirectoryPageSliver(this.viewModel);
+class DirectoryPageContent extends StatelessWidget {
+  DirectoryPageContent(this.viewModel);
 
   final DirectoryPageViewModel viewModel;
 
   @override
   Widget build(BuildContext context) {
-    if (viewModel.status == LoadingStatus.success) {
-      return DirectoryGridSliver(
+    return LoadingView(
+      status: viewModel.status,
+      loadingContent: Text("Loading..."),
+      errorContent: ErrorView(
+        description: 'Could not load directory.',
+        onRetry: viewModel.refreshDirectory,
+      ),
+      successContent: DirectoryGrid(
         drive: viewModel.drive,
         path: viewModel.path,
         content: viewModel.content,
+        refreshCallback: viewModel.refreshDirectory,
         downloadFileCallback: viewModel.downloadFile,
-      );
-    }
-    if (viewModel.status == LoadingStatus.error) {
-      return SliverFillRemaining(
-          child: ErrorView(
-        description: 'Error loading directory.',
-        onRetry: null,
-      ));
-    }
-
-    return SliverFillRemaining(
-      child: Padding(
-        child: Text(
-          "Loading...",
-          textAlign: TextAlign.center,
-        ),
-        padding: EdgeInsets.all(16.0),
       ),
     );
   }

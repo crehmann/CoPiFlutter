@@ -34,7 +34,6 @@ class DirectoryGridFolderItem extends StatelessWidget {
             height: 80.0,
             child: Icon(
               Icons.folder,
-              color: CupertinoColors.activeBlue,
               size: 80.0,
             )),
         Container(
