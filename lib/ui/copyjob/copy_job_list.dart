@@ -15,10 +15,11 @@ class CopyJobList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (copyJobs.isEmpty) {
-      return const InfoMessageView(
+      return InfoMessageView(
         key: emptyViewKey,
         title: 'No Copy Jobs',
-        description: 'Create a new copy jobe!',
+        description: 'Create a new copy job!',
+        onActionButtonTapped: () => onReloadCallback(),
       );
     }
 

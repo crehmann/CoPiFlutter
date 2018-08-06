@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/models/copy_job.dart';
 import 'package:flutter_app/models/copy_job_state.dart';
 import 'package:flutter_app/ui/copyjob/copy_job_details_page.dart';
-import 'package:intl/intl.dart';
 
 class CopyJobListTile extends StatelessWidget {
-  static final DateFormat hoursAndMins = DateFormat('HH:mm');
-
   CopyJobListTile(
     this.copyJob,
   );
