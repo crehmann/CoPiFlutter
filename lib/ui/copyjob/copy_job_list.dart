@@ -33,7 +33,7 @@ class CopyJobList extends StatelessWidget {
           itemBuilder: (BuildContext context, int index) {
             return Column(
               children: <Widget>[
-                CopyJobListTile(copyJobs[index]),
+                CopyJobListTile(copyJob: copyJobs[index], clickable: true),
                 const Divider(
                   height: 1.0,
                   color: const Color(0x40000000),

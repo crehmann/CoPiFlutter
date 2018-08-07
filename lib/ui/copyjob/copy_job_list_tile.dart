@@ -4,17 +4,19 @@ import 'package:flutter_app/models/copy_job_state.dart';
 import 'package:flutter_app/ui/copyjob/copy_job_details_page.dart';
 
 class CopyJobListTile extends StatelessWidget {
-  CopyJobListTile(
-    this.copyJob,
-  );
+  CopyJobListTile({
+    @required this.copyJob,
+    @required this.clickable,
+  });
 
   final CopyJob copyJob;
+  final bool clickable;
 
-  void _navigateToEventDetails(BuildContext context) {
+  void _navigateToCopyJobDetails(BuildContext context) {
     Navigator.push<Null>(
       context,
       MaterialPageRoute(
-        builder: (_) => CopyJobDetailsPage(),
+        builder: (_) => CopyJobDetailsPage(copyJob: copyJob),
       ),
     );
   }
@@ -59,10 +61,7 @@ class CopyJobListTile extends StatelessWidget {
         vertical: 2.0,
       ),
       child: Text(
-        "flags: " +
-            copyJob.flags.toString() +
-            ", options: " +
-            copyJob.options.toString(),
+        "flags: " + copyJob.flags.toString(),
         style: const TextStyle(
           fontWeight: FontWeight.bold,
           fontSize: 12.0,
@@ -84,21 +83,29 @@ class CopyJobListTile extends StatelessWidget {
     );
   }
 
+  Widget _buildTile() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+      child: Row(
+        children: <Widget>[
+          SizedBox(width: 38.0, child: Center(child: _buildStateInfo())),
+          const SizedBox(width: 20.0),
+          _buildDetailedInfo(),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    if(!clickable){
+      return _buildTile();
+    }
+
     return Material(
       child: InkWell(
-        onTap: () => _navigateToEventDetails(context),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
-          child: Row(
-            children: <Widget>[
-              SizedBox(width: 38.0, child: Center(child: _buildStateInfo())),
-              const SizedBox(width: 20.0),
-              _buildDetailedInfo(),
-            ],
-          ),
-        ),
+        onTap: () => _navigateToCopyJobDetails(context),
+        child: _buildTile(),
       ),
     );
   }
