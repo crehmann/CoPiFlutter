@@ -16,36 +16,44 @@ class CopyJobDetailsPage extends StatelessWidget {
           title: Text("CopyJob Details"),
           centerTitle: Platform.isIOS,
         ),
-        body: Scrollbar(
-            child: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            CopyJobListTile(copyJob: copyJob, clickable: false),
-            Container(
-              padding: EdgeInsets.all(16.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Text(
-                    "Output:",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 4.0),
-                  Text(copyJob.output.join("\n")),
-                  SizedBox(height: 16.0),
-                  Text(
-                    "Errors:",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 4.0),
-                  Text(copyJob.error ?? "none")
-                ],
-              ),
-            )
-          ],
-        )));
+        body: ListView.builder(
+            itemCount: 1,
+            itemBuilder: (context, index) => Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    CopyJobListTile(copyJob: copyJob, clickable: false),
+                    Container(
+                      padding: EdgeInsets.all(16.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: <Widget>[
+                          Text(
+                            "Connand:",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(height: 4.0),
+                          Text(copyJob.command),
+                          SizedBox(height: 16.0),
+                          Text(
+                            "Output:",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(height: 4.0),
+                          Text(copyJob.output.join("\n")),
+                          SizedBox(height: 16.0),
+                          Text(
+                            "Errors:",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(height: 4.0),
+                          Text(copyJob.error ?? "none")
+                        ],
+                      ),
+                    )
+                  ],
+                )));
   }
 }

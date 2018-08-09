@@ -24,7 +24,7 @@ class CopyJobParser {
         status: _parseCopyJobState(json['state'] as String),
         output: BuiltList(
             (json['output'] as List).map<String>((d) => d as String)),
-        error: json['error'] as String);
+        error: json['error'].toString());
   }
 
   static CopyJobStatus _parseCopyJobState(String value) {

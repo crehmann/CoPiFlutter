@@ -45,7 +45,7 @@ class DriveListTile extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             new Text(
-                              drive.description,
+                              drive.description + " (${drive.device})",
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(

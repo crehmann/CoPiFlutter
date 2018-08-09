@@ -13,18 +13,18 @@ class DirectoryParser {
     json['isDirectory'] as bool
         ? Folder(
         name: json['name'] as String,
-        creationTime: DateTime.fromMicrosecondsSinceEpoch(
+        creationTime: DateTime.fromMillisecondsSinceEpoch(
             (json['birthtime'] as num).toInt(),
             isUtc: true),
-        lastModified: DateTime.fromMicrosecondsSinceEpoch(
+        lastModified: DateTime.fromMillisecondsSinceEpoch(
             (json['mtimeMs'] as num).toInt(),
             isUtc: true))
         : File(
         name: json['name'] as String,
-        creationTime: DateTime.fromMicrosecondsSinceEpoch(
+        creationTime: DateTime.fromMillisecondsSinceEpoch(
             (json['birthtimeMs'] as num).toInt(),
             isUtc: true),
-        lastModified: DateTime.fromMicrosecondsSinceEpoch(
+        lastModified: DateTime.fromMillisecondsSinceEpoch(
             (json['mtimeMs'] as num).toInt(),
             isUtc: true),
         size: json['size'] as int,

@@ -155,7 +155,7 @@ class CopyJobCreatePageContentState extends State<CopyJobCreatePageContent> {
     var action = CreateCopyJobAction(
         sourceDevicePath: source.devicePath,
         destinationDevicePath: destination.devicePath,
-        flags: dryRun ? ["n"] : [],
+        flags: dryRun ? ["n", "a"] : ["a"],
         options: []);
     StoreProvider.of<AppState>(context).dispatch(action);
     setState(() {
