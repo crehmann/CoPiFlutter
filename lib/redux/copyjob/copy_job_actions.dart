@@ -54,6 +54,8 @@ class CreateCopyJobAction {
   final List<String> flags;
   final List<String> options;
 
+  final Completer<Null> completer = new Completer();
+
   CreateCopyJobAction(
       {@required this.sourceDevicePath,
       @required this.destinationDevicePath,

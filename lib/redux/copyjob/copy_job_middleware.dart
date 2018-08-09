@@ -24,9 +24,9 @@ class CopyJobMiddleware extends MiddlewareClass {
       try {
         var copyJobs = await api.fetchCopyJobs();
         next(ReceivedCopyJobListAction(copyJobs: copyJobs));
-        action.completer.complete();
       } catch (e) {
         next(ErrorLoadingCopyJobListAction());
+      } finally {
         action.completer.complete();
       }
     }
@@ -37,9 +37,9 @@ class CopyJobMiddleware extends MiddlewareClass {
       try {
         var copyJob = await api.fetchCopyJob(action.id);
         next(ReceivedCopyJobAction(copyJob: copyJob));
-        action.completer.complete();
       } catch (e) {
         next(ErrorLoadingCopyJobAction(id: action.id));
+      } finally {
         action.completer.complete();
       }
     }
@@ -52,8 +52,10 @@ class CopyJobMiddleware extends MiddlewareClass {
         var copyJob = await api.createCopyJob(action.sourceDevicePath,
             action.destinationDevicePath, action.flags, action.options);
         next(CreatedCopyJobAction(copyJob: copyJob));
+        action.completer.complete();
       } catch (e) {
         next(ErrorCreatingCopyJobAction());
+        action.completer.completeError(e);
       }
     }
   }

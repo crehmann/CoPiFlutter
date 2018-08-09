@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter_app/models/copy_job.dart';
 import 'package:flutter_app/networking/copy_job_parser.dart';
 import 'package:flutter_app/utils/http_utils.dart';
@@ -30,6 +31,6 @@ class CopyJobApi {
       'flags': flags,
       'options': options
     });
-    return compute(CopyJobParser.parseCopyJobJson, response);
+    return compute(CopyJobParser.parseCopyJobJson, json.decode(response));
   }
 }
