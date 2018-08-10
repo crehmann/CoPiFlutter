@@ -65,7 +65,7 @@ class DirectoryGridFileItem extends StatelessWidget {
               child: ClipRRect(
                   borderRadius: borderRadius,
                   child: Image.network(
-                    globals.baseUri.toString() + item.previewLink.value,
+                    globals.getBaseUri().toString() + item.previewLink.value,
                   )),
             ),
             padding: EdgeInsets.all(16.0),

@@ -9,13 +9,13 @@ import 'package:flutter_app/globals.dart' as globals;
 class CopyJobApi {
   Future<List<CopyJob>> fetchCopyJobs() async {
     final response =
-        await getRequest(globals.baseUri.replace(path: 'copyjobs'));
+        await getRequest(globals.getBaseUri().replace(path: 'copyjobs'));
     return compute(CopyJobParser.parseCopyJobListJson, response);
   }
 
   Future<CopyJob> fetchCopyJob(String id) async {
     final response =
-        await getRequest(globals.baseUri.replace(path: 'copyjobs'));
+        await getRequest(globals.getBaseUri().replace(path: 'copyjobs'));
     return compute(CopyJobParser.parseCopyJobJson, response);
   }
 
@@ -25,7 +25,7 @@ class CopyJobApi {
       List<String> flags,
       List<String> options) async {
     final response =
-        await postRequest(globals.baseUri.replace(path: 'copyjobs'), {
+        await postRequest(globals.getBaseUri().replace(path: 'copyjobs'), {
       'source': sourceDevicePath,
       'destination': destinationDevicePath,
       'flags': flags,

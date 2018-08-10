@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_app/ui/copyjob/copy_job_create_page.dart';
 import 'package:flutter_app/ui/copyjob/copy_job_list_page.dart';
 import 'package:flutter_app/ui/drives/drives_page.dart';
+import 'package:flutter_app/ui/settings/settings_page.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage();
@@ -49,12 +50,31 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
     ));
   }
 
+  void _openSettingsPage(BuildContext context) {
+    Navigator.of(context).push(new MaterialPageRoute(
+      builder: (BuildContext context) {
+        return new SettingsPage();
+      },
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
         title: Text("CoPi"),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(
+              Icons.settings,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              _openSettingsPage(context);
+            },
+          )
+        ],
         bottom: TabBar(
           controller: _controller,
           tabs: const <Tab>[

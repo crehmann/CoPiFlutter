@@ -9,8 +9,10 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_app/redux/app/app_state.dart';
 import 'package:flutter_app/redux/store.dart';
 import 'package:redux/redux.dart';
+import 'package:flutter_app/globals.dart' as globals;
 
 Future<Null> main() async {
+  await globals.init();
   runApp(CoPiApp(createStore()));
 }
 
