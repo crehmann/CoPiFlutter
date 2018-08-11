@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/networking/web_socket_client.dart';
 import 'package:flutter_app/redux/copyjob/copy_job_actions.dart';
 import 'package:flutter_app/redux/drive/drive_actions.dart';
 import 'package:flutter_app/ui/main_page.dart';
@@ -13,13 +14,16 @@ import 'package:flutter_app/globals.dart' as globals;
 
 Future<Null> main() async {
   await globals.init();
-  runApp(CoPiApp(createStore()));
+  var store = createStore();
+  var webSocketClient = new WebSocketClient(store);
+  webSocketClient.connect();
+  runApp(CoPiApp(store));
 }
 
 class CoPiApp extends StatefulWidget {
-  CoPiApp(this.store);
-
   final Store<AppState> store;
+
+  CoPiApp(this.store);
 
   @override
   _CoPiAppState createState() => _CoPiAppState();

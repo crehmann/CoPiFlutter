@@ -72,3 +72,12 @@ class CreatedCopyJobAction {
 }
 
 class ErrorCreatingCopyJobAction {}
+
+// -- Copy Job Update --//
+
+class CopyJobProgressUpdatedAction {
+  final String id;
+  final int progress;
+
+  CopyJobProgressUpdatedAction({@required this.id, @required this.progress});
+}

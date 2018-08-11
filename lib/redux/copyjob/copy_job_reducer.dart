@@ -20,6 +20,8 @@ final copyJobStateReducer = combineReducers<CopyJobListState>([
   TypedReducer<CopyJobListState, CreatedCopyJobAction>(_createdCopyJob),
   TypedReducer<CopyJobListState, ErrorCreatingCopyJobAction>(
       _errorCreatingCopyJob),
+  TypedReducer<CopyJobListState, CopyJobProgressUpdatedAction>(
+      _updateCopyJobProgress),
 ]);
 
 CopyJobListState _requestingCopyJobList(
@@ -79,4 +81,15 @@ CopyJobListState _createdCopyJob(
 CopyJobListState _errorCreatingCopyJob(
     CopyJobListState state, ErrorCreatingCopyJobAction action) {
   return state.copyWith(createCopyJobLoadingStatus: LoadingStatus.error);
+}
+
+CopyJobListState _updateCopyJobProgress(
+    CopyJobListState state, CopyJobProgressUpdatedAction action) {
+  var copyJobState = state.copyJobStates
+      .firstWhere((s) => s.copyJob.id == action.id, orElse: null);
+  if (copyJobState == null) return state;
+
+  return state.copyAndUpdateCopyJobState(
+      withId: action.id,
+      copyJob: copyJobState.copyJob.copyWith(progress: action.progress));
 }
