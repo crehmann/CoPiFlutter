@@ -21,13 +21,13 @@ class CopyJobParser {
             (json['options'] as List).map<String>((d) => d as String)),
         command: json['command'] as String,
         progress: json['progress'] as int,
-        status: _parseCopyJobState(json['state'] as String),
+        status: parseCopyJobState(json['state'] as String),
         output: BuiltList(
             (json['output'] as List).map<String>((d) => d as String)),
         error: json['error'].toString());
   }
 
-  static CopyJobStatus _parseCopyJobState(String value) {
+  static CopyJobStatus parseCopyJobState(String value) {
     switch (value) {
       case "inProgress":
         return CopyJobStatus.InProgress;

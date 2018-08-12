@@ -23,7 +23,7 @@ class DriveList extends StatelessWidget {
         key: emptyViewKey,
         title: 'All empty!',
         description: 'Didn\'t find any drives.',
-        onActionButtonTapped: null,
+        onActionButtonTapped: onReloadCallback,
       );
     }
 

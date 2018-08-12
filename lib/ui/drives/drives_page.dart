@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/models/loading_status.dart';
 import 'package:flutter_app/redux/app/app_state.dart';
-import 'package:flutter_app/redux/drive/drive_actions.dart';
 import 'package:flutter_app/ui/common/info_message_view.dart';
 import 'package:flutter_app/ui/common/loading_view.dart';
 import 'package:flutter_app/ui/drives/drive_list.dart';

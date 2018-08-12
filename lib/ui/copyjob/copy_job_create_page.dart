@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/drive.dart';
-import 'package:flutter_app/models/loading_status.dart';
 import 'package:flutter_app/redux/app/app_state.dart';
 import 'package:flutter_app/redux/copyjob/copy_job_actions.dart';
 import 'package:flutter_app/ui/copyjob/copy_job_create_view_model.dart';

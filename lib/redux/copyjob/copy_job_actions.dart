@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_app/models/copy_job.dart';
+import 'package:flutter_app/models/copy_job_state.dart';
 import 'package:meta/meta.dart';
 
 // -- CopyJob List -- //
@@ -78,6 +79,7 @@ class ErrorCreatingCopyJobAction {}
 class CopyJobProgressUpdatedAction {
   final String id;
   final int progress;
+  final CopyJobStatus status;
 
-  CopyJobProgressUpdatedAction({@required this.id, @required this.progress});
+  CopyJobProgressUpdatedAction({@required this.id, @required this.progress, @required this.status});
 }

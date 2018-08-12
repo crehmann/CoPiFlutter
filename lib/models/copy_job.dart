@@ -27,7 +27,7 @@ class CopyJob {
       this.output,
       this.error});
 
-  CopyJob copyWith({int progress}) {
+  CopyJob copyWith({int progress, CopyJobStatus status}) {
     return CopyJob(
         id: this.id,
         source: this.source,
@@ -35,8 +35,8 @@ class CopyJob {
         flags: this.flags,
         options: this.options,
         command: this.command,
-        progress: progress,
-        status: this.status,
+        progress: progress ?? this.progress,
+        status: status ?? this.status,
         output: this.output,
         error: this.error);
   }

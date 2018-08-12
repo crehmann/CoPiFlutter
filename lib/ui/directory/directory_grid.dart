@@ -36,6 +36,7 @@ class DirectoryGrid extends StatelessWidget {
         key: emptyViewKey,
         title: 'Empty',
         description: 'This directory is empty.',
+        onActionButtonTapped: refreshCallback,
       );
     }
 

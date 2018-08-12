@@ -86,10 +86,10 @@ CopyJobListState _errorCreatingCopyJob(
 CopyJobListState _updateCopyJobProgress(
     CopyJobListState state, CopyJobProgressUpdatedAction action) {
   var copyJobState = state.copyJobStates
-      .firstWhere((s) => s.copyJob.id == action.id, orElse: null);
+      .firstWhere((s) => s.copyJob.id == action.id, orElse: () => null);
   if (copyJobState == null) return state;
 
   return state.copyAndUpdateCopyJobState(
       withId: action.id,
-      copyJob: copyJobState.copyJob.copyWith(progress: action.progress));
+      copyJob: copyJobState.copyJob.copyWith(progress: action.progress, status: action.status));
 }

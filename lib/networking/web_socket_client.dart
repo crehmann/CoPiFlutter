@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter_app/networking/copy_job_parser.dart';
 import 'package:flutter_app/redux/app/app_state.dart';
 import 'package:flutter_app/redux/copyjob/copy_job_actions.dart';
 import 'package:redux/redux.dart';
@@ -16,10 +17,14 @@ class WebSocketClient {
         .stream
         .listen((msg) {
       final parsed = json.decode(msg);
+      print(parsed);
       if (parsed["subject"] == "copyJobProgress") {
         var id = parsed["data"]["id"] as String;
         var progress = parsed["data"]["progress"] as int;
-        store.dispatch(CopyJobProgressUpdatedAction(id: id, progress: progress));
+        var status = CopyJobParser.parseCopyJobState(
+            parsed["data"]["state"] as String);
+        store.dispatch(
+            CopyJobProgressUpdatedAction(id: id, progress: progress, status: status));
       }
     });
   }
